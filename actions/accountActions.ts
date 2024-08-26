@@ -13,7 +13,7 @@ export async function getAccounts(): Promise<AccountContract[]> {
       tags: ['ACCOUNT']
     });
   } catch (e) {
-    return [];
+    return []
   }
 }
 
