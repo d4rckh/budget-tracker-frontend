@@ -24,9 +24,10 @@ import {newAccount} from "@/actions/accountActions";
 import {ErrorContract} from "@/types/ErrorContract";
 
 export default function NewAccountDialog() {
-  const [name, setName] = useState("");
-  const [currency, setCurrency] = useState("");
   const [type, setType] = useState("");
+  const [transactionValue, setTransactionValue] = useState("");
+  const [description, setDescription] = useState("");
+
 
   const {toast} = useToast();
 
@@ -38,8 +39,6 @@ export default function NewAccountDialog() {
       <DialogHeader>
         <DialogTitle>Creating new account</DialogTitle>
         <div className={"pt-3 flex flex-col gap-2"}>
-          <Label htmlFor="name">Name</Label>
-          <Input onChange={(e) => setName(e.target.value)} id="name"/>
 
           <Label>Type</Label>
           <Select onValueChange={setType}>
@@ -47,28 +46,15 @@ export default function NewAccountDialog() {
               <SelectValue placeholder="Choose type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="CHECKING">Checking</SelectItem>
-              <SelectItem value="DEBT">Debt</SelectItem>
-              <SelectItem value="CASH">Cash</SelectItem>
-              <SelectItem value="SAVINGS">Savings</SelectItem>
+              <SelectItem value="INCOME">Income</SelectItem>
+              <SelectItem value="EXPENSE">Expense</SelectItem>
             </SelectContent>
           </Select>
 
-          <Label>Currency</Label>
-          <Select onValueChange={setCurrency}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Choose currency" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="RON">RON</SelectItem>
-              <SelectItem value="USD">USD</SelectItem>
-              <SelectItem value="EUR">EUR</SelectItem>
-            </SelectContent>
-          </Select>
 
           <Button onClick={() => {
 
-            newAccount(name, currency, type).then((r: String) => toast({
+            newTransaction(type).then((r: String) => toast({
               title: r.toString()
             })).catch((e) => {
               toast({

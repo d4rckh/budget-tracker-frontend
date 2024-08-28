@@ -15,9 +15,9 @@ export async function getTransactions(): Promise<TransactionContract[]> {
   }
 }
 
-export async function newAccount(transaction: TransactionContract): Promise<String> {
+export async function newTransaction(transaction: TransactionContract): Promise<String> {
   try {
-    await fetchApi("/accounts", "POST", {
+    await fetchApi("/transactions", "POST", {
       tags: ['TRANSACTION']
     }, transaction);
   } catch ({message}) {

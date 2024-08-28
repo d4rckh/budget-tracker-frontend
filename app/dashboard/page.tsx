@@ -2,14 +2,15 @@ import {getUserDetails} from "@/actions/userActions";
 import {redirect} from "next/navigation";
 import {getAccounts} from "@/actions/accountActions";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+
 import NewAccountDialog from "@/components/accounts/NewAccountDialog";
 import { Badge } from "@/components/ui/badge";
 import {getTransactions} from "@/actions/transactionActions";
 
-import TransactionTable from "@/components/transaction /TransactionTable";
+
 import React from "react";
-import NewTransactionDialog from "@/components/transaction /NewTransactionDialog";
+import TransactionTable from "@/components/transaction /TransactionTable";
+
 
 export default async function Page() {
 
@@ -39,6 +40,15 @@ export default async function Page() {
           </Card>
 
         )}
+      </CardContent>
+    </Card>
+
+    <Card className={"mt-4"}>
+      <CardHeader>
+        <CardTitle>Transactions <NewAccountDialog /></CardTitle>
+     </CardHeader>
+      <CardContent>
+        <TransactionTable/>
       </CardContent>
     </Card>
   </>
