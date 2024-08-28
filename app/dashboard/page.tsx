@@ -17,7 +17,6 @@ import {TransactionCategoriesChart} from "@/components/transaction/charts/Transa
 import EditAccountDialog from "@/components/accounts/EditAccountDialog";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 
-
 export default async function Page() {
 
   const {data: user} = await getUserDetails();
@@ -27,11 +26,17 @@ export default async function Page() {
   const accounts_data = await getAccounts();
   const accounts = accounts_data.sort((a,b) => a.id - b.id);
   const transactions_data = await getTransactions();
-  const transactions = transactions_data.sort((a,b) => a.id - b.id);
+  const transactions = transactions_data.sort((a,b) => b.id - a.id);
   const categories_data = await getCategories();
   const categories = categories_data.sort((a,b) => a.id - b.id);
 
   return <>
+    <Card className={"mb-3"}>
+      <CardHeader>
+        <CardTitle>Your Dashboard</CardTitle>
+        <CardDescription>Your total net worth is {accounts.reduce((acc, cur) => acc + cur.balance, 0)} USD</CardDescription>
+      </CardHeader>
+    </Card>
     <div className={"flex flex-row gap-3"}>
       <Card className={"w-[500px]"}>
         <CardHeader>
