@@ -27,3 +27,9 @@ export async function deleteAccount(id: number) {
     tags: ['ACCOUNT']
   })).data;
 }
+
+export async function editAccount(account: AccountContract): Promise<ClientError<AccountContract>> {
+  return await fetchApi("/accounts/" + account.id, "PUT", {
+    tags: ['ACCOUNT']
+  }, account);
+}
