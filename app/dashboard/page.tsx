@@ -12,6 +12,8 @@ import React from "react";
 import TransactionTable from "@/components/transaction/TransactionTable";
 import NewTransactionDialog from "@/components/transaction/NewTransactionDialog";
 import {getCategories} from "@/actions/categoryActions";
+import AccountValueChart from "@/components/accounts/charts/AccountValueChart";
+import {TransactionCategoriesChart} from "@/components/transaction/charts/TransactionCategoriesChart";
 
 
 export default async function Page() {
@@ -27,7 +29,7 @@ export default async function Page() {
   return <>
     <Card>
       <CardHeader>
-        <CardTitle>Accounts <NewAccountDialog /></CardTitle>
+        <CardTitle>Accounts <NewAccountDialog/></CardTitle>
       </CardHeader>
       <CardContent className={"grid grid-cols-3 gap-4"}>
         {accounts.map(account =>
@@ -41,10 +43,14 @@ export default async function Page() {
               <Badge className={"text-1xl"}>{account.balance} {account.currency}</Badge>
             </CardContent>
           </Card>
-
         )}
       </CardContent>
     </Card>
+
+    <div className={"mt-4 flex flex-row gap-3"}>
+        <AccountValueChart accounts={accounts} />
+        <TransactionCategoriesChart />
+    </div>
 
     <Card className={"mt-4"}>
       <CardHeader>
