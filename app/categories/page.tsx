@@ -1,9 +1,12 @@
 import {getUserDetails} from "@/actions/userActions";
 import {redirect} from "next/navigation";
 import {getAccounts} from "@/actions/accountActions";
-import {getTransactions} from "@/actions/transactionActions";
-import {getCategories} from "@/actions/categoryActions";
+import {getTransactions, newTransaction} from "@/actions/transactionActions";
+import {getCategories, newCategory} from "@/actions/categoryActions";
 import CategoriesTable from "@/components/categories/CategoriesTable";
+import {Button} from "@/components/ui/button";
+import {ClientError} from "@/types/ErrorContract";
+import CreateCategoryForm from "@/components/categories/CreateCategoryForm";
 
 export default async function Page() {
 
@@ -17,7 +20,7 @@ export default async function Page() {
     const categories = await getCategories();
 
     return <>
-
+        <CreateCategoryForm user={user}/>
         <CategoriesTable categories={categories} />
     </>
 
