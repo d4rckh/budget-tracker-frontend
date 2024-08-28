@@ -46,7 +46,7 @@ export default async function RootLayout({
 
 
     </div>
-    <main className={"mt-10 max-w-[1200px] px-7 mr-auto ml-auto"}>
+    <main className={"mt-10 max-w-[1200px] px-7 mr-auto ml-auto mb-[70px]"}>
       {children}
     </main>
     <Toaster/>

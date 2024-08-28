@@ -28,36 +28,39 @@ export default function EditTransactionForm({transaction, categories ,children}:
         <DialogContent>
             <DialogHeader>
                 <DialogTitle>Editing a Transaction</DialogTitle>
-                <Label htmlFor="name">Type</Label>
-                <Select value={type} onValueChange={(e: "INCOME" | "EXPENSE") => setType(e)}>
-                    <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Choose type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="INCOME">Income</SelectItem>
-                        <SelectItem value="EXPENSE">Expense</SelectItem>
-                    </SelectContent>
-                </Select>
+                <div className={"pt-3 flex flex-col gap-2"}>
+                    <Label htmlFor="name">Type</Label>
+                    <Select value={type} onValueChange={(e: "INCOME" | "EXPENSE") => setType(e)}>
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Choose type"/>
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="INCOME">Income</SelectItem>
+                            <SelectItem value="EXPENSE">Expense</SelectItem>
+                        </SelectContent>
+                    </Select>
 
-                <Label>Category</Label>
-                <Select value={categoryId.toString()} onValueChange={(e: string) => setCategoryId(parseInt(e))}>
-                    <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Choose category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {
-                            categories.map(category =>
-                                <SelectItem key={category.id} value={category.id.toString()}>{category.name}</SelectItem>
-                            )
-                        }
-                    </SelectContent>
-                </Select>
+                    <Label>Category</Label>
+                    <Select value={categoryId.toString()} onValueChange={(e: string) => setCategoryId(parseInt(e))}>
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Choose category"/>
+                        </SelectTrigger>
+                        <SelectContent>
+                            {
+                                categories.map(category =>
+                                  <SelectItem key={category.id}
+                                              value={category.id.toString()}>{category.name}</SelectItem>
+                                )
+                            }
+                        </SelectContent>
+                    </Select>
 
-                <Label>Description</Label>
-                <Input onChange={(e) => setDescription(e.target.value)} id="description"/>
+                    <Label>Description</Label>
+                    <Input onChange={(e) => setDescription(e.target.value)} id="description"/>
 
-                <Label>Value</Label>
-                <Input value={transactionValue} type={"number"} onChange={(e) => setTransactionValue(parseInt(e.target.value))} id="value"/>
+                    <Label>Value</Label>
+                    <Input value={transactionValue} type={"number"}
+                           onChange={(e) => setTransactionValue(parseInt(e.target.value))} id="value"/>
 
                     <DialogClose asChild>
                         <Button onClick={() => {
@@ -88,7 +91,9 @@ export default function EditTransactionForm({transaction, categories ,children}:
 
                         }}>Delete</Button>
                     </DialogClose>
+                </div>
             </DialogHeader>
         </DialogContent>
-    </Dialog>;
+    </Dialog>
+;
 }

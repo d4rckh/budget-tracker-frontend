@@ -34,7 +34,7 @@ export default async function Page() {
     <Card className={"mb-3"}>
       <CardHeader>
         <CardTitle>Your Dashboard</CardTitle>
-        <CardDescription>Your total net worth is {accounts.reduce((acc, cur) => acc + cur.balance, 0)} USD</CardDescription>
+        <CardDescription>Your total net worth is <span className={"font-bold"}>{accounts.reduce((acc, cur) => acc + cur.balance, 0)} USD</span></CardDescription>
       </CardHeader>
     </Card>
     <div className={"flex flex-row gap-3"}>
@@ -54,7 +54,7 @@ export default async function Page() {
               {accounts.map(account =>
                 <EditAccountDialog key={account.id} account={account}>
                   <TableRow className={"cursor-pointer"}>
-                    <TableCell>{account.name} </TableCell>
+                    <TableCell className={"font-bold"}>{account.name} <Badge className={"ml-2"} variant={"outline"}>{account.type}</Badge></TableCell>
                     <TableCell className={"text-right"}><Badge>{account.balance} {account.currency}</Badge></TableCell>
                   </TableRow>
                 </EditAccountDialog>
