@@ -4,6 +4,7 @@ import React from "react";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {TransactionContract} from "@/types/TransactionContract";
 import {CategoryContract} from "@/types/CategoryContract";
+import EditTransactionForm from "@/components/transaction/EditTransactionForm";
 
 export default function TransactionTable({transactions, categories}: {
     transactions: TransactionContract[],
@@ -22,6 +23,7 @@ export default function TransactionTable({transactions, categories}: {
             <TableBody>
                 {
                     transactions.map(transaction =>
+                        <EditTransactionForm transaction={transaction} categories={categories} key={transaction.id}>
                         <TableRow key={transaction.id}>
                             <TableCell className="font-medium">{transaction.type}</TableCell>
                             <TableCell>{
@@ -30,6 +32,7 @@ export default function TransactionTable({transactions, categories}: {
                             <TableCell className={"text-right"}>{transaction.type == "EXPENSE" && "-"}{transaction.value}</TableCell>
                             <TableCell>{transaction.description}</TableCell>
                         </TableRow>
+                        </EditTransactionForm>
                     )
                 }
             </TableBody>
