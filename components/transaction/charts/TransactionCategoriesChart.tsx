@@ -18,15 +18,11 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-const chartData = [
-  { category: "Transport", value: 275, fill: "hsl(var(--chart-4))" },
-  { category: "Groceries", value: 200, fill: "hsl(var(--chart-3))" },
-  { category: "Electronics", value: 287, fill: "hsl(var(--chart-2))" },
-]
-
-export function TransactionCategoriesChart() {
-  const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.value, 0)
+import {TransactionContract} from "@/types/TransactionContract";
+import {CategoryContract} from "@/types/CategoryContract";
+export function TransactionCategoriesChart({transactions, categories}: {transactions: TransactionContract[], categories: CategoryContract[]}) {
+  const totalSpent = React.useMemo(() => {
+    return transactions.reduce((acc, curr) => acc + curr.value, 0)
   }, [])
 
   return (
@@ -46,7 +42,13 @@ export function TransactionCategoriesChart() {
               content={<ChartTooltipContent hideLabel />}
             />
             <Pie
-              data={chartData}
+              data={categories.map(category =>
+                  ({
+                    category: category.name,
+                    value: transactions.filter(transaction => transaction.categoryId === category.id).reduce((acc, cur) => acc + cur.value, 0),
+                    fill: `hsl(var(--chart-${(category.id-1) % 5 + 1}))`,
+                  })
+              )}
               dataKey="value"
               nameKey="category"
               innerRadius={60}
@@ -67,7 +69,7 @@ export function TransactionCategoriesChart() {
                           y={viewBox.cy}
                           className="fill-foreground text-3xl font-bold"
                         >
-                          -{totalVisitors.toLocaleString()}
+                          -{totalSpent.toLocaleString()}
                         </tspan>
                         <tspan
                           x={viewBox.cx}

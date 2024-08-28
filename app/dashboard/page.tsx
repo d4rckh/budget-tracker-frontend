@@ -49,7 +49,7 @@ export default async function Page() {
 
     <div className={"mt-4 flex flex-row gap-3"}>
         <AccountValueChart accounts={accounts} />
-        <TransactionCategoriesChart />
+        <TransactionCategoriesChart transactions={transactions} categories={categories} />
     </div>
 
     <Card className={"mt-4"}>

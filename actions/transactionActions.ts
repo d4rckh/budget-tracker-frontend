@@ -14,6 +14,6 @@ export async function getTransactions(): Promise<TransactionContract[]> {
 
 export async function newTransaction(transaction: TransactionContract): Promise<ClientError<AccountContract>> {
     return await fetchApi("/transactions", "POST", {
-      tags: ['TRANSACTION']
+      tags: ['TRANSACTION', 'ACCOUNT']
     }, transaction);
 }
