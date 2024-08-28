@@ -26,8 +26,10 @@ export default async function Page() {
 
   const accounts_data = await getAccounts();
   const accounts = accounts_data.sort((a,b) => a.id - b.id);
-  const transactions = await getTransactions();
-  const categories = await getCategories();
+  const transactions_data = await getTransactions();
+  const transactions = transactions_data.sort((a,b) => a.id - b.id);
+  const categories_data = await getCategories();
+  const categories = categories_data.sort((a,b) => a.id - b.id);
 
   return <>
     <div className={"flex flex-row gap-3"}>

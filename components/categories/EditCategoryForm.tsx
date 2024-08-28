@@ -13,14 +13,14 @@ import {ClientError} from "@/types/ErrorContract";
 import {CategoryContract} from "@/types/CategoryContract";
 import {deleteCategory, editCategory} from "@/actions/categoryActions";
 
-export default function EditCategoryForm({category}: {category: CategoryContract}) {
+export default function EditCategoryForm({category, children}: {category: CategoryContract, children: React.ReactNode}) {
     const [name, setName] = useState(category.name);
 
     const {toast} = useToast();
 
     return <Dialog>
         <DialogTrigger asChild>
-            <Button size={"icon"} className={"rounded-full"} variant={"outline"}>edit</Button>
+            {children}
         </DialogTrigger>
         <DialogContent>
             <DialogHeader>

@@ -8,12 +8,6 @@ export async function getCategories(): Promise<CategoryContract[]> {
         tags: ['CATEGORY']
     })).data || [];
 }
-export async function deleteCategory(id: number) {
-    return (await fetchApi<CategoryContract>("/categories/" + id, "DELETE", {
-        tags: ['CATEGORY']
-    })).data;
-}
-
 export async function newCategory(category: CategoryContract): Promise<ClientError<AccountContract>> {
     return await fetchApi("/categories", "POST", {
         tags: ['Category',]
