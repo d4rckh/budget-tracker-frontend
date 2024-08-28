@@ -13,3 +13,13 @@ export async function newCategory(category: CategoryContract): Promise<ClientErr
         tags: ['Category',]
     }, category);
 }
+export async function editCategory(category: CategoryContract): Promise<ClientError<CategoryContract>> {
+    return await fetchApi("/categories/" + category.id, "PUT", {
+        tags: ['CATEGORY']
+    }, category);
+}
+export async function deleteCategory(id: number): Promise<ClientError<CategoryContract>> {
+    return await fetchApi("/categories/" + id, "DELETE", {
+        tags: ['CATEGORY']
+    });
+}
