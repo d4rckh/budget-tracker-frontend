@@ -13,9 +13,7 @@ export default function VerifyEmailAlert() {
 
   function sendEmailButton() {
     sendVerificationEmail().then((result) => toast({
-      title: result ? "Successfully sent verification email" : "Already sent a verification email, please wait 10 minutes",
-    })).catch(() => toast({
-      title: "Failed to send verification email",
+      title: result.data ? "Successfully sent verification email" : "Already sent a verification email, please wait 10 minutes",
     }))
   }
 
@@ -34,7 +32,7 @@ export default function VerifyEmailAlert() {
         <Button className={"ml-1"} variant={"outline"} onClick={() =>
           verifyEmail(verificationToken)
             .then((result) => toast({
-              title: "Verified email!"
+              title: result.data ? "Verified email!" : "Wrong verification token supplied"
             }))
         }
         >

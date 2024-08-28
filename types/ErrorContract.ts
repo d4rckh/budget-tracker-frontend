@@ -3,3 +3,8 @@ export type ErrorContract = {
   timestamp: number,
   service: string
 }
+
+export type ClientError<T> = {
+  error: ErrorContract | null,
+  data: T | null
+}

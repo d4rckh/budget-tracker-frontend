@@ -21,7 +21,7 @@ import {
 import {useState} from "react";
 import {useToast} from "@/components/ui/use-toast";
 import {newAccount} from "@/actions/accountActions";
-import {ErrorContract} from "@/types/ErrorContract";
+import {ClientError, ErrorContract} from "@/types/ErrorContract";
 
 export default function NewAccountDialog() {
   const [type, setType] = useState("");
@@ -54,13 +54,9 @@ export default function NewAccountDialog() {
 
           <Button onClick={() => {
 
-            newTransaction(type).then((r: String) => toast({
-              title: r.toString()
-            })).catch((e) => {
-              toast({
-                title: e
-              })
-            });
+            newAccount(name, currency, type).then((r: ClientError<any>) => toast({
+              title: r.error ? JSON.stringify(r.error) : "Successfully created account",
+            }))
 
           }}>Create</Button>
         </div>

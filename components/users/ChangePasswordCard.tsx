@@ -17,10 +17,8 @@ export default function ChangePasswordCard() {
     <CardContent className={"flex flex-col"}>
       <Button size={"sm"} variant={"outline"} onClick={() => {
         requestPasswordChange().then((result) => toast({
-          title: result ? "Sent password change request" : "Couldn't send password change request, wait 10 minutes"
-        })).catch(e => toast({
-          title: "Couldn't send password change request " + e,
-        }))
+          title: result.data ? "Sent password change request" : "Couldn't send password change request, wait 10 minutes"
+        }));
       }}>Request Password Change</Button>
     </CardContent>
   </Card>
