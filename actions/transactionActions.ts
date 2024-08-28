@@ -22,5 +22,12 @@ export async function newTransaction(transaction: TransactionContract): Promise<
 export async function deleteTransaction(id: number) {
   return (await fetchApi<CategoryContract>("/transactions/" + id, "DELETE", {
     tags: ['TRANSACTION', 'ACCOUNT']
-  })).data;
+  }));
 }
+
+export async function editTransaction(transaction: TransactionContract): Promise<ClientError<CategoryContract>> {
+    return await fetchApi("/transactions/" + transaction.id, "PUT", {
+        tags: ['TRANSACTION','ACCOUNT']
+    }, transaction);
+}
+
