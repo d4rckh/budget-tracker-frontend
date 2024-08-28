@@ -18,7 +18,9 @@ export async function getUserDetails(): Promise<UserContract | null> {
 export async function sendVerificationEmail(): Promise<Boolean | null> {
   try {
     const session = await getSessionDetails();
-    return await fetchApi("/users/verify/" + session?.userId, "POST");
+    return await fetchApi("/users/verify", "POST", {}, {
+      userId: session?.userId
+    });
   } catch (e) {
     return Promise.reject(e);
   }
@@ -26,8 +28,7 @@ export async function sendVerificationEmail(): Promise<Boolean | null> {
 
 export async function verifyEmail(token: String): Promise<Boolean | null> {
   try {
-    const session = await getSessionDetails();
-    return await fetchApi("/users/verify/" + session?.userId + "/" + token, "POST", {tags: ["USER"]});
+    return await fetchApi("/users/verify/" + token, "PUT", {tags: ["USER"]});
   } catch (e) {
     return Promise.reject(e);
   }
@@ -36,7 +37,9 @@ export async function verifyEmail(token: String): Promise<Boolean | null> {
 export async function requestPasswordChange(): Promise<Boolean | null> {
   try {
     const session = await getSessionDetails();
-    return await fetchApi("/users/changepassword/" + session?.userId, "POST");
+    return await fetchApi("/users/recovery", "POST", {}, {
+      userId: session?.userId
+    });
   } catch (e) {
     return Promise.reject(e);
   }
@@ -44,9 +47,8 @@ export async function requestPasswordChange(): Promise<Boolean | null> {
 
 export async function changePasswordWithToken(token: string, password: string): Promise<Boolean | null> {
   try {
-    const session = await getSessionDetails();
-    return await fetchApi("/users/changepassword/" + session?.userId, "PUT", { tags: ['USER'] }, {
-      token, password
+    return await fetchApi("/users/recovery/" + token, "PUT", { tags: ['USER'] }, {
+      password
     });
   } catch (e) {
     return Promise.reject(e);
