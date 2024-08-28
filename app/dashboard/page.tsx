@@ -5,6 +5,7 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/compo
 import { Button } from "@/components/ui/button";
 import NewAccountDialog from "@/components/accounts/NewAccountDialog";
 import { Badge } from "@/components/ui/badge";
+import {getTransactions} from "@/actions/transactionActions";
 
 export default async function Page() {
 
@@ -13,6 +14,7 @@ export default async function Page() {
   if (!user.verifiedAt) redirect("/account");
 
   const accounts = await getAccounts();
+  const transactions = await getTransactions();
 
   return <>
     <Card>
@@ -35,5 +37,6 @@ export default async function Page() {
         )}
       </CardContent>
     </Card>
+    {JSON.stringify(transactions)}
   </>
 }
