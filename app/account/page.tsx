@@ -7,7 +7,7 @@ import VerifyEmailAlert from "@/components/users/VerifyEmailAlert";
 import ChangePasswordCard from "@/components/users/ChangePasswordCard";
 
 export default async function Page() {
-  const user = await getUserDetails();
+  const {data: user} = await getUserDetails();
 
   if (!user) return redirect("/login");
 

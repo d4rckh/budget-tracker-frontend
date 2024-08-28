@@ -4,6 +4,7 @@ import {Input} from "@/components/ui/input";
 import {useState} from "react";
 import {Button} from "@/components/ui/button";
 import {register} from "@/actions/loginActions";
+import {ClientError} from "@/types/ErrorContract";
 
 export default function RegisterForm(props: { onRegister: Function }) {
   const [email, setEmail] = useState("");
@@ -12,7 +13,9 @@ export default function RegisterForm(props: { onRegister: Function }) {
   const [lastName, setLastName] = useState("");
 
   function registerButton() {
-    register(email, password, firstName, lastName).then(() => props.onRegister());
+    register(email, password, firstName, lastName).then((r) => {
+      if (r) props.onRegister()
+    });
   }
 
   return <div className={"flex flex-col gap-1.5"}>

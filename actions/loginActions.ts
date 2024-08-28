@@ -6,20 +6,21 @@ import {cookies} from "next/headers";
 import {UserContract} from "@/types/UserContract";
 
 export async function login(email: string, password: string) {
-  const session: SessionContract = await fetchApi("/sessions", "POST", {
+  const session = await fetchApi<SessionContract>("/sessions", "POST", {
     tags: ['USER']
   }, {
     email, password
   });
-  cookies().set("SESSION", session.sessionKey);
-  return session;
+  if (session.data)
+    cookies().set("SESSION", session.data.sessionKey);
+  return session.data;
 }
 
 export async function register(email: string, password: string, firstName: string, lastName: string) {
-  const session: UserContract = await fetchApi("/users/register", "POST", {
+  const session = await fetchApi<UserContract>("/users/register", "POST", {
     tags: ['USER'],
   }, {
     email, firstName, lastName, password
   });
-  return session;
+  return session.data;
 }
