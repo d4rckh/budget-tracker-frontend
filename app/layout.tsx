@@ -17,6 +17,8 @@ export default function RootLayout({
       <Link href={"/"}>Home</Link>
       <Link href={"/login"}>Login</Link>
       <Link href={"/dashboard"}>Dashboard</Link>
+      <Link href={"/categories"}>Categories</Link>
+
     </div>
     <main className={"mt-10 max-w-[1200px] px-7 mr-auto ml-auto"}>
       {children}

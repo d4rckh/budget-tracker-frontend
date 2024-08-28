@@ -14,6 +14,7 @@ import NewTransactionDialog from "@/components/transaction/NewTransactionDialog"
 import {getCategories} from "@/actions/categoryActions";
 import AccountValueChart from "@/components/accounts/charts/AccountValueChart";
 import {TransactionCategoriesChart} from "@/components/transaction/charts/TransactionCategoriesChart";
+import EditAccountDialog from "@/components/accounts/EditAccountDialog";
 
 
 export default async function Page() {
@@ -22,7 +23,7 @@ export default async function Page() {
   if (!user) return redirect("/login");
   if (!user.verifiedAt) redirect("/account");
 
-  const accounts = await getAccounts();
+  const accounts = (await getAccounts()).sort((a,b) => a.id - b.id);
   const transactions = await getTransactions();
   const categories = await getCategories();
 
@@ -36,7 +37,7 @@ export default async function Page() {
 
           <Card key={account.id}>
             <CardHeader>
-              <CardTitle>{account.name}</CardTitle>
+              <CardTitle>{account.name} <EditAccountDialog account={account} /></CardTitle>
               <CardDescription>{account.type}</CardDescription>
             </CardHeader>
             <CardContent>

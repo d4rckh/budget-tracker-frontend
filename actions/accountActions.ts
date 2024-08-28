@@ -20,3 +20,8 @@ export async function newAccount(name: string, currency: string, type: string, b
     name, currency, type, balance, id: 2, userId: session?.userId
   });
 }
+export async function editAccount(account: AccountContract): Promise<ClientError<AccountContract>> {
+  return await fetchApi("/accounts/" + account.id, "PUT", {
+    tags: ['ACCOUNT']
+  }, account);
+}
