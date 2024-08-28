@@ -9,8 +9,9 @@ import {getTransactions} from "@/actions/transactionActions";
 
 
 import React from "react";
-import TransactionTable from "@/components/transaction /TransactionTable";
-import NewTransactionDialog from "@/components/transaction /NewTransactionDialog";
+import TransactionTable from "@/components/transaction/TransactionTable";
+import NewTransactionDialog from "@/components/transaction/NewTransactionDialog";
+import {getCategories} from "@/actions/categoryActions";
 
 
 export default async function Page() {
@@ -21,6 +22,7 @@ export default async function Page() {
 
   const accounts = await getAccounts();
   const transactions = await getTransactions();
+  const categories = await getCategories();
 
   return <>
     <Card>
@@ -46,10 +48,10 @@ export default async function Page() {
 
     <Card className={"mt-4"}>
       <CardHeader>
-        <CardTitle>Transactions <NewTransactionDialog /></CardTitle>
+        <CardTitle>Transactions <NewTransactionDialog  accounts={accounts} userId={user.id} categories={categories}/></CardTitle>
      </CardHeader>
       <CardContent>
-        <TransactionTable/>
+        <TransactionTable transactions={transactions} categories={categories}/>
       </CardContent>
     </Card>
   </>
