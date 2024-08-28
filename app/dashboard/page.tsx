@@ -15,6 +15,7 @@ import {getCategories} from "@/actions/categoryActions";
 import AccountValueChart from "@/components/accounts/charts/AccountValueChart";
 import {TransactionCategoriesChart} from "@/components/transaction/charts/TransactionCategoriesChart";
 import EditAccountDialog from "@/components/accounts/EditAccountDialog";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 
 
 export default async function Page() {
@@ -23,34 +24,44 @@ export default async function Page() {
   if (!user) return redirect("/login");
   if (!user.verifiedAt) redirect("/account");
 
-  const accounts = (await getAccounts()).sort((a,b) => a.id - b.id);
+  const accounts_data = await getAccounts();
+  const accounts = accounts_data.sort((a,b) => a.id - b.id);
   const transactions = await getTransactions();
   const categories = await getCategories();
 
   return <>
-    <Card>
-      <CardHeader>
-        <CardTitle>Accounts <NewAccountDialog/></CardTitle>
-      </CardHeader>
-      <CardContent className={"grid grid-cols-3 gap-4"}>
-        {accounts.map(account =>
-
-          <Card key={account.id}>
-            <CardHeader>
-              <CardTitle>{account.name} <EditAccountDialog account={account} /></CardTitle>
-              <CardDescription>{account.type}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Badge className={"text-1xl"}>{account.balance} {account.currency}</Badge>
-            </CardContent>
-          </Card>
-        )}
-      </CardContent>
-    </Card>
+    <div className={"flex flex-row gap-3"}>
+      <Card className={"w-[500px]"}>
+        <CardHeader>
+          <CardTitle>Accounts <NewAccountDialog/></CardTitle>
+        </CardHeader>
+        <CardContent className={"grid grid-cols-1 gap-4"}>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead className={"text-right"}>Value</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {accounts.map(account =>
+                <EditAccountDialog key={account.id} account={account}>
+                  <TableRow className={"cursor-pointer"}>
+                    <TableCell>{account.name} </TableCell>
+                    <TableCell className={"text-right"}><Badge>{account.balance} {account.currency}</Badge></TableCell>
+                  </TableRow>
+                </EditAccountDialog>
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+      <AccountValueChart accounts={accounts} />
+    </div>
 
     <div className={"mt-4 flex flex-row gap-3"}>
-        <AccountValueChart accounts={accounts} />
-        <TransactionCategoriesChart transactions={transactions} categories={categories} />
+      <TransactionCategoriesChart transactions={transactions.filter(t => t.type == "EXPENSE")} categories={categories} title={"Expense Categories"} />
+      <TransactionCategoriesChart transactions={transactions.filter(t => t.type == "INCOME")} categories={categories} title={"Income Categories"} />
     </div>
 
     <Card className={"mt-4"}>

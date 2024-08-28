@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/select"
 import {useState} from "react";
 import {useToast} from "@/components/ui/use-toast";
-import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog";
+import {Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
@@ -59,13 +59,13 @@ export default function NewAccountDialog() {
             </SelectContent>
           </Select>
 
-          <Button onClick={() => {
-
-            newAccount(name, currency, type).then((r: ClientError<any>) => toast({
-              title: r.error ? JSON.stringify(r.error) : "Successfully created account",
-            }))
-
-          }}>Create</Button>
+          <DialogClose asChild>
+            <Button onClick={() => {
+              newAccount(name, currency, type).then((r: ClientError<any>) => toast({
+                title: r.error ? JSON.stringify(r.error) : "Successfully created account",
+              }))
+            }}>Create</Button>
+          </DialogClose>
         </div>
       </DialogHeader>
     </DialogContent>

@@ -12,12 +12,12 @@ import {Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTri
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
-import {editAccount, newAccount} from "@/actions/accountActions";
+import {deleteAccount, editAccount, newAccount} from "@/actions/accountActions";
 import {ClientError} from "@/types/ErrorContract";
 import {AccountContract} from "@/types/BudgetContract";
 
 
-export default function EditAccountDialog({account}: {account: AccountContract}) {
+export default function EditAccountDialog({account, children}: {account: AccountContract, children: React.ReactNode}) {
   const [name, setName] = useState(account.name);
   const [currency, setCurrency] = useState(account.currency);
   const [type, setType] = useState<"CHECKING" | "DEBT" | "CASH" | "SAVINGS">(account.type);
@@ -26,7 +26,7 @@ export default function EditAccountDialog({account}: {account: AccountContract})
 
   return <Dialog>
     <DialogTrigger asChild>
-      <Button size={"icon"} className={"rounded-full"} variant={"outline"}>edit</Button>
+      {children}
     </DialogTrigger>
     <DialogContent>
       <DialogHeader>
@@ -73,6 +73,11 @@ export default function EditAccountDialog({account}: {account: AccountContract})
               }))
 
             }}>Edit</Button>
+          </DialogClose>
+          <DialogClose asChild>
+            <Button variant={"destructive"} onClick={() => deleteAccount(account.id).then(r => toast({
+              title: r.error ? JSON.stringify(r.error) : "Deleted successfully",
+            }))}>Delete</Button>
           </DialogClose>
         </div>
       </DialogHeader>

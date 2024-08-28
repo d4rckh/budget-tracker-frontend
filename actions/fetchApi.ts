@@ -21,10 +21,12 @@ export async function fetchApi<T>(
       "X-SESSION": cooks.get("SESSION")?.value || ''
     }
   });
-
+  if (method != "GET") {
+    if (next.tags) next.tags.forEach(revalidateTag);
+  }
   let responseBody = await res.text();
-  console.log(path, " ", res.status, " ", responseBody);
-  if (res.status !== 200) {
+  console.log(path, " ", res.statusText, " ", responseBody);
+  if (!res.status.toString().startsWith("2")) {
     try {
       return {
         data: null,
@@ -41,12 +43,13 @@ export async function fetchApi<T>(
       }
     }
   }
-  if (method != "GET") {
-    if (next.tags) next.tags.forEach(revalidateTag);
+  try {
+    return {
+      data: JSON.parse(responseBody),
+      error: null
+    };
+  } catch (e) {
+    return {data: null, error: null};
   }
-  return {
-    data: JSON.parse(responseBody),
-    error: null
-  };
 }
 

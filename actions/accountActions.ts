@@ -25,7 +25,7 @@ export async function newAccount(name: string, currency: string, type: string, b
 export async function deleteAccount(id: number) {
   return (await fetchApi<CategoryContract>("/accounts/" + id, "DELETE", {
     tags: ['ACCOUNT']
-  })).data;
+  }));
 }
 
 export async function editAccount(account: AccountContract): Promise<ClientError<AccountContract>> {

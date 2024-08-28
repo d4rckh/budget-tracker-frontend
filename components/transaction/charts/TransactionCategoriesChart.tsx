@@ -20,15 +20,15 @@ import {
 } from "@/components/ui/chart"
 import {TransactionContract} from "@/types/TransactionContract";
 import {CategoryContract} from "@/types/CategoryContract";
-export function TransactionCategoriesChart({transactions, categories}: {transactions: TransactionContract[], categories: CategoryContract[]}) {
+export function TransactionCategoriesChart({title, transactions, categories}: {title: string, transactions: TransactionContract[], categories: CategoryContract[]}) {
   const totalSpent = React.useMemo(() => {
-    return transactions.reduce((acc, curr) => acc + curr.value, 0)
-  }, [])
+    return transactions.reduce((acc, curr) => acc + curr.value * (curr.type == "EXPENSE" ? -1 : 1), 0)
+  }, [transactions])
 
   return (
     <Card className={"w-full h-full"}>
       <CardHeader>
-        <CardTitle>Transaction Categories</CardTitle>
+        <CardTitle>{title}</CardTitle>
         <CardDescription>Last 7 days</CardDescription>
       </CardHeader>
       <CardContent>
@@ -69,14 +69,14 @@ export function TransactionCategoriesChart({transactions, categories}: {transact
                           y={viewBox.cy}
                           className="fill-foreground text-3xl font-bold"
                         >
-                          -{totalSpent.toLocaleString()}
+                          {totalSpent.toLocaleString()}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Spent
+                          Total
                         </tspan>
                       </text>
                     )

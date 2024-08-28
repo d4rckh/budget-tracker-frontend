@@ -2,7 +2,7 @@
 
 import {Button} from "@/components/ui/button";
 import {
-    Dialog,
+    Dialog, DialogClose,
     DialogContent,
     DialogDescription,
     DialogHeader,
@@ -94,22 +94,24 @@ export default function NewTransactionDialog({accounts, userId, categories}:{acc
                     <Input type={"number"} onChange={(e) => setTransactionValue(parseInt(e.target.value))} id="value"/>
 
 
-                    <Button onClick={() => {
+                    <DialogClose asChild>
+                        <Button onClick={() => {
 
-                        newTransaction({
-                            id: 1,
-                            type,
-                            userId:userId,
-                            value: transactionValue,
-                            description: description,
-                            categoryId: categoryId,
-                            accountId: accountId,
-                            timestamp: (new Date()).toISOString(),
-                        }).then((r: ClientError<any>) => toast({
-                            title: r.error ? JSON.stringify(r.error) : "Successfully created account",
-                        }))
+                            newTransaction({
+                                id: 1,
+                                type,
+                                userId:userId,
+                                value: transactionValue,
+                                description: description,
+                                categoryId: categoryId,
+                                accountId: accountId,
+                                timestamp: (new Date()).toISOString(),
+                            }).then((r: ClientError<any>) => toast({
+                                title: r.error ? JSON.stringify(r.error) : "Successfully created account",
+                            }))
 
-                    }}>Create</Button>
+                        }}>Create</Button>
+                    </DialogClose>
                 </div>
             </DialogHeader>
         </DialogContent>

@@ -27,7 +27,7 @@ export default function TransactionTable({transactions, categories}: {
                             <TableCell>{
                                 categories.filter(category => category.id == transaction.categoryId)[0]?.name
                             }</TableCell>
-                            <TableCell className={"text-right"}>{transaction.value}</TableCell>
+                            <TableCell className={"text-right"}>{transaction.type == "EXPENSE" && "-"}{transaction.value}</TableCell>
                             <TableCell>{transaction.description}</TableCell>
                         </TableRow>
                     )
