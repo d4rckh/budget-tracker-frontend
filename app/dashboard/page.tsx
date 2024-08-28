@@ -10,6 +10,7 @@ import {getTransactions} from "@/actions/transactionActions";
 
 import React from "react";
 import TransactionTable from "@/components/transaction /TransactionTable";
+import NewTransactionDialog from "@/components/transaction /NewTransactionDialog";
 
 
 export default async function Page() {
@@ -45,7 +46,7 @@ export default async function Page() {
 
     <Card className={"mt-4"}>
       <CardHeader>
-        <CardTitle>Transactions <NewAccountDialog /></CardTitle>
+        <CardTitle>Transactions <NewTransactionDialog /></CardTitle>
      </CardHeader>
       <CardContent>
         <TransactionTable/>

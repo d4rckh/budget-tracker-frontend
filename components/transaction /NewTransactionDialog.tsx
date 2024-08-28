@@ -1,4 +1,16 @@
-"use client"
+"use client";
+
+import {Button} from "@/components/ui/button";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/components/ui/dialog";
+import {Label} from "@/components/ui/label";
+import {Input} from "@/components/ui/input";
 import {
     Select,
     SelectContent,
@@ -8,16 +20,14 @@ import {
 } from "@/components/ui/select"
 import {useState} from "react";
 import {useToast} from "@/components/ui/use-toast";
-import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog";
-import {Button} from "@/components/ui/button";
-import {Input} from "@/components/ui/input";
-import {Label} from "@/components/ui/label";
-
+import {newAccount} from "@/actions/accountActions";
+import {ClientError, ErrorContract} from "@/types/ErrorContract";
 
 export default function NewTransactionDialog() {
-    const [name, setName] = useState("");
-    const [currency, setCurrency] = useState("");
     const [type, setType] = useState("");
+    const [transactionValue, setTransactionValue] = useState("");
+    const [description, setDescription] = useState("");
+
 
     const {toast} = useToast();
 
@@ -29,8 +39,6 @@ export default function NewTransactionDialog() {
             <DialogHeader>
                 <DialogTitle>Creating new account</DialogTitle>
                 <div className={"pt-3 flex flex-col gap-2"}>
-                    <Label htmlFor="name">Name</Label>
-                    <Input onChange={(e) => setName(e.target.value)} id="name"/>
 
                     <Label>Type</Label>
                     <Select onValueChange={setType}>
@@ -38,27 +46,13 @@ export default function NewTransactionDialog() {
                             <SelectValue placeholder="Choose type" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="CHECKING">Checking</SelectItem>
-                            <SelectItem value="DEBT">Debt</SelectItem>
-                            <SelectItem value="CASH">Cash</SelectItem>
-                            <SelectItem value="SAVINGS">Savings</SelectItem>
+                            <SelectItem value="INCOME">Income</SelectItem>
+                            <SelectItem value="EXPENSE">Expense</SelectItem>
                         </SelectContent>
                     </Select>
 
-                    <Label>Currency</Label>
-                    <Select onValueChange={setCurrency}>
-                        <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Choose currency" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="RON">RON</SelectItem>
-                            <SelectItem value="USD">USD</SelectItem>
-                            <SelectItem value="EUR">EUR</SelectItem>
-                        </SelectContent>
-                    </Select>
 
                     <Button onClick={() => {
-
 
                     }}>Create</Button>
                 </div>
@@ -66,3 +60,5 @@ export default function NewTransactionDialog() {
         </DialogContent>
     </Dialog>;
 }
+
+
