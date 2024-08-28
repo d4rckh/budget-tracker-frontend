@@ -38,7 +38,7 @@ export default async function Page() {
       </CardHeader>
     </Card>
     <div className={"flex flex-row gap-3"}>
-      <Card className={"w-[500px]"}>
+      <Card className={"w-[600px]"}>
         <CardHeader>
           <CardTitle>Accounts <NewAccountDialog/></CardTitle>
         </CardHeader>

@@ -35,3 +35,7 @@ export async function changePasswordWithToken(token: string, password: string): 
     password
   });
 }
+
+export async function verifyWithToken(token: string): Promise<ClientError<Boolean>> {
+  return await fetchApi("/users/verify/" + token, "PUT", { tags: ['USER'] });
+}

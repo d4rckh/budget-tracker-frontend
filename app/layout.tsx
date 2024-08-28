@@ -35,6 +35,11 @@ export default async function RootLayout({
       }
       {
         user && <Button asChild variant={"outline"}>
+              <Link href={"/notifications"}>Notifications</Link>
+          </Button>
+      }
+      {
+        user && <Button asChild variant={"outline"}>
               <Link href={"/account"}>Account</Link>
           </Button>
       }
