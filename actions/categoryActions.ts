@@ -6,3 +6,9 @@ export async function getCategories(): Promise<CategoryContract[]> {
         tags: ['CATEGORY']
     })).data || [];
 }
+
+export async function deleteCategory(id: number) {
+    return (await fetchApi<CategoryContract>("/categories/" + id, "DELETE", {
+        tags: ['CATEGORY']
+    })).data;
+}
