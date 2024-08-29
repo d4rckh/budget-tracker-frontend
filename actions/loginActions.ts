@@ -13,7 +13,7 @@ export async function login(email: string, password: string) {
   });
   if (session.data)
     cookies().set("SESSION", session.data.sessionKey);
-  return session.data;
+  return session;
 }
 
 export async function register(email: string, password: string, firstName: string, lastName: string) {

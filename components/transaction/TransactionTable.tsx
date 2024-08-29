@@ -6,10 +6,12 @@ import {TransactionContract} from "@/types/TransactionContract";
 import {CategoryContract} from "@/types/CategoryContract";
 import EditTransactionForm from "@/components/transaction/EditTransactionForm";
 import {Badge} from "@/components/ui/badge";
+import {AccountContract} from "@/types/BudgetContract";
 
-export default function TransactionTable({transactions, categories}: {
+export default function TransactionTable({transactions, categories, accounts}: {
     transactions: TransactionContract[],
-    categories: CategoryContract[]
+    categories: CategoryContract[],
+    accounts: AccountContract[]
 }) {
     return(
         <Table>
@@ -18,6 +20,7 @@ export default function TransactionTable({transactions, categories}: {
                     <TableHead className="w-[100px]">Type</TableHead>
                     <TableHead>Category</TableHead>
                     <TableHead className="text-right">Value</TableHead>
+                    <TableHead>Account</TableHead>
                     <TableHead>Description</TableHead>
                 </TableRow>
             </TableHeader>
@@ -30,7 +33,14 @@ export default function TransactionTable({transactions, categories}: {
                               <TableCell><Badge variant={"outline"}>{
                                 categories.filter(category => category.id == transaction.categoryId)[0]?.name
                               }</Badge> </TableCell>
-                              <TableCell className={"text-right font-bold"}>{transaction.type == "EXPENSE" && "-"}{transaction.value}</TableCell>
+                              <TableCell className={"text-right font-bold"}>{transaction.type == "EXPENSE" && "-"}{transaction.value} {
+                                accounts.filter(account => account.id == transaction.accountId)[0]?.currency
+                              }</TableCell>
+                              <TableCell>
+                                {
+                                  accounts.filter(account => account.id == transaction.accountId)[0]?.name
+                                }
+                              </TableCell>
                               <TableCell>{transaction.description}</TableCell>
                           </TableRow>
                         </EditTransactionForm>

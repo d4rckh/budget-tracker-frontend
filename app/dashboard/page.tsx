@@ -76,7 +76,7 @@ export default async function Page() {
         <CardTitle>Transactions <NewTransactionDialog  accounts={accounts} userId={user.id} categories={categories}/></CardTitle>
      </CardHeader>
       <CardContent>
-        <TransactionTable transactions={transactions} categories={categories}/>
+        <TransactionTable accounts={accounts} transactions={transactions} categories={categories}/>
       </CardContent>
     </Card>
   </>
