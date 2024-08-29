@@ -4,6 +4,7 @@ import {fetchApi} from "@/actions/fetchApi";
 import {UserContract} from "@/types/UserContract";
 import {getSessionDetails} from "@/actions/sessionActions";
 import {ClientError} from "@/types/ErrorContract";
+import {cookies} from "next/headers";
 
 export async function getUserDetails(): Promise<ClientError<UserContract>> {
   const session = await getSessionDetails();
@@ -38,4 +39,8 @@ export async function changePasswordWithToken(token: string, password: string): 
 
 export async function verifyWithToken(token: string): Promise<ClientError<Boolean>> {
   return await fetchApi("/users/verify/" + token, "PUT", { tags: ['USER'] });
+}
+
+export async function deleteSession(): Promise<ClientError<Boolean>> {
+  return await fetchApi("/sessions/" + cookies().get("SESSION")?.value, "DELETE", { tags: ['USER'] });
 }

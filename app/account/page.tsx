@@ -5,6 +5,7 @@ import Image from "next/image";
 import {Badge} from "@/components/ui/badge";
 import VerifyEmailAlert from "@/components/users/VerifyEmailAlert";
 import ChangePasswordCard from "@/components/users/ChangePasswordCard";
+import LogoutCard from "@/components/users/LogoutCard";
 
 export default async function Page() {
   const {data: user} = await getUserDetails();
@@ -35,5 +36,6 @@ export default async function Page() {
       </CardContent>
     </Card>
     <ChangePasswordCard />
+    <LogoutCard />
   </div>;
 }

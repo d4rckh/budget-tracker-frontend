@@ -25,7 +25,7 @@ export async function fetchApi<T>(
     if (next.tags) next.tags.forEach(revalidateTag);
   }
   let responseBody = await res.text();
-  console.log(path, " ", res.statusText, " ", responseBody);
+  console.log(method, " ", path, " ", res.statusText, " ", responseBody);
   if (!res.status.toString().startsWith("2")) {
     try {
       return {
