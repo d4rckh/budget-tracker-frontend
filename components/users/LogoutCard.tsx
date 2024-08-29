@@ -3,23 +3,23 @@
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {useToast} from "@/components/ui/use-toast";
-import {requestPasswordChange} from "@/actions/userActions";
+import {deleteSession, requestPasswordChange} from "@/actions/userActions";
 
-export default function ChangePasswordCard() {
+export default function LogoutCard() {
   const {toast} = useToast();
 
   return <Card>
     <CardHeader>
       <CardTitle className={"flex flex-row gap-5 items-center"}>
-        Reset Password
+        Logout
       </CardTitle>
     </CardHeader>
     <CardContent className={"flex flex-col"}>
       <Button size={"sm"} variant={"outline"} onClick={() => {
-        requestPasswordChange().then((result) => toast({
-          title: result.data ? "Sent password change request" : "Couldn't send password change request, wait 10 minutes"
+        deleteSession().then((result) => toast({
+          title: result.data ? "Successfully logout" : "Couldn't logout"
         }));
-      }}>Request Password Change</Button>
+      }}>Logout</Button>
     </CardContent>
   </Card>
 }

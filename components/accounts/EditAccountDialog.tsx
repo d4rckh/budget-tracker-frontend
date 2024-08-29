@@ -12,30 +12,31 @@ import {Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTri
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
-import {newAccount} from "@/actions/accountActions";
+import {deleteAccount, editAccount, newAccount} from "@/actions/accountActions";
 import {ClientError} from "@/types/ErrorContract";
+import {AccountContract} from "@/types/BudgetContract";
 
 
-export default function NewAccountDialog() {
-  const [name, setName] = useState("");
-  const [currency, setCurrency] = useState("");
-  const [type, setType] = useState("");
+export default function EditAccountDialog({account, children}: {account: AccountContract, children: React.ReactNode}) {
+  const [name, setName] = useState(account.name);
+  const [currency, setCurrency] = useState(account.currency);
+  const [type, setType] = useState<"CHECKING" | "DEBT" | "CASH" | "SAVINGS">(account.type);
 
   const {toast} = useToast();
 
   return <Dialog>
     <DialogTrigger asChild>
-      <Button size={"icon"} className={"rounded-full"} variant={"outline"}>+</Button>
+      {children}
     </DialogTrigger>
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Creating new account</DialogTitle>
+        <DialogTitle>Editing a account</DialogTitle>
         <div className={"pt-3 flex flex-col gap-2"}>
           <Label htmlFor="name">Name</Label>
-          <Input onChange={(e) => setName(e.target.value)} id="name"/>
+          <Input value={name} onChange={(e) => setName(e.target.value)} id="name"/>
 
           <Label>Type</Label>
-          <Select onValueChange={setType}>
+          <Select value={type} onValueChange={(e: "CHECKING" | "DEBT" | "CASH" | "SAVINGS") => setType(e)}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Choose type" />
             </SelectTrigger>
@@ -48,7 +49,7 @@ export default function NewAccountDialog() {
           </Select>
 
           <Label>Currency</Label>
-          <Select onValueChange={setCurrency}>
+          <Select value={currency} onValueChange={setCurrency}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Choose currency" />
             </SelectTrigger>
@@ -61,10 +62,22 @@ export default function NewAccountDialog() {
 
           <DialogClose asChild>
             <Button onClick={() => {
-              newAccount(name, currency, type).then((r: ClientError<any>) => toast({
-                title: r.error ? JSON.stringify(r.error) : "Successfully created account",
+
+              editAccount({
+                name, currency, type,
+                userId: account.userId,
+                balance: account.balance,
+                id: account.id
+              }).then((r: ClientError<any>) => toast({
+                title: r.error ? JSON.stringify(r.error) : "Successfully edited account",
               }))
-            }}>Create</Button>
+
+            }}>Edit</Button>
+          </DialogClose>
+          <DialogClose asChild>
+            <Button variant={"destructive"} onClick={() => deleteAccount(account.id).then(r => toast({
+              title: r.error ? JSON.stringify(r.error) : "Deleted successfully",
+            }))}>Delete</Button>
           </DialogClose>
         </div>
       </DialogHeader>

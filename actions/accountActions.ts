@@ -4,30 +4,32 @@ import {fetchApi} from "@/actions/fetchApi";
 import {UserContract} from "@/types/UserContract";
 import {getSessionDetails} from "@/actions/sessionActions";
 import {AccountContract} from "@/types/BudgetContract";
-import {ErrorContract} from "@/types/ErrorContract";
+import {ClientError, ErrorContract} from "@/types/ErrorContract";
+import {CategoryContract} from "@/types/CategoryContract";
 
 export async function getAccounts(): Promise<AccountContract[]> {
-  try {
-    const session = await getSessionDetails();
-    return await fetchApi("/accounts", "GET", {
-      tags: ['ACCOUNT']
-    });
-  } catch (e) {
-    return [];
-  }
+  return (await fetchApi<AccountContract[]>("/accounts", "GET", {
+    tags: ['ACCOUNT']
+  })).data || [];
 }
 
-export async function newAccount(name: string, currency: string, type: string, balance: number = 0): Promise<String> {
+export async function newAccount(name: string, currency: string, type: string, balance: number = 0): Promise<ClientError<AccountContract>> {
   const session = await getSessionDetails();
+  return await fetchApi("/accounts", "POST", {
+    tags: ['ACCOUNT']
+  }, {
+    name, currency, type, balance, id: 2, userId: session?.userId
+  });
+}
 
-  try {
-    await fetchApi("/accounts", "POST", {
-      tags: ['ACCOUNT']
-    }, {
-      name, currency, type, balance, id: 2, userId: session?.userId
-    });
-  } catch ({message}) {
-    return JSON.stringify({message});
-  }
-  return "Successfully created account";
+export async function deleteAccount(id: number) {
+  return (await fetchApi<CategoryContract>("/accounts/" + id, "DELETE", {
+    tags: ['ACCOUNT']
+  }));
+}
+
+export async function editAccount(account: AccountContract): Promise<ClientError<AccountContract>> {
+  return await fetchApi("/accounts/" + account.id, "PUT", {
+    tags: ['ACCOUNT']
+  }, account);
 }
