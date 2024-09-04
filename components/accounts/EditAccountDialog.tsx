@@ -75,7 +75,7 @@ export default function EditAccountDialog({account, children}: {account: Account
             }}>Edit</Button>
           </DialogClose>
           <DialogClose asChild>
-            <Button variant={"destructive"} onClick={() => deleteAccount(account.id).then(r => toast({
+            <Button variant={"destructive-outline"} onClick={() => deleteAccount(account.id).then(r => toast({
               title: r.error ? JSON.stringify(r.error) : "Deleted successfully",
             }))}>Delete</Button>
           </DialogClose>

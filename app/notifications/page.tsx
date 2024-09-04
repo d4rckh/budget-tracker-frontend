@@ -4,10 +4,17 @@ import {getCategories, newCategory} from "@/actions/categoryActions";
 import CategoriesTable from "@/components/categories/CategoriesTable";
 import CreateCategoryForm from "@/components/categories/CreateCategoryForm";
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
-import {getNotifications} from "@/actions/notificationActions";
+import {getNotifications, markNotificationAsRead} from "@/actions/notificationActions";
+import { Badge } from "@/components/ui/badge";
+import {Button} from "@/components/ui/button";
+import {useToast} from "@/components/ui/use-toast";
+import MarkNotificationAsReadButton from "@/components/notifications/MarkNotificationAsReadButton";
+import {revalidateTag} from "next/cache";
+import RefreshNotifications from "@/components/notifications/RefreshNotifications";
 
 export default async function Page() {
   const {data: user} = await getUserDetails();
+
   if (!user) return redirect("/login");
   if (!user.verifiedAt) redirect("/account");
 
@@ -16,11 +23,13 @@ export default async function Page() {
 
   return <>
     <h1 className={"text-3xl"}>Notifications</h1>
+    <RefreshNotifications />
     {
       notifications.filter(notif => notif.channels.includes("WEB")).map(notif =>
-        <Card key={notif.id} className={"mt-4"}>
+        <Card key={notif.id} className={"mt-4 border-2 " + (!notif.markedAsRead ? "border-amber-200" : "")}>
           <CardHeader>
-            <CardTitle className={"text-md"}>{notif.type.split("_").join(" ")}</CardTitle>
+            <CardTitle className={"text-md"}>{notif.type.split("_").join(" ")}
+              {!notif.markedAsRead && <Badge className={"ml-2"} variant={"warning"}>New</Badge>}</CardTitle>
           </CardHeader>
           <CardContent>
             {
@@ -31,7 +40,8 @@ export default async function Page() {
             }
           </CardContent>
           <CardFooter className={"text-gray-500"}>
-            Created at <span className={"ml-1 font-bold"}>{notif.createdAt}</span>
+            {!notif.markedAsRead && <MarkNotificationAsReadButton notification={notif} />}
+            <span>Created at <span className={"ml-1 font-bold"}>{notif.createdAt}</span></span>
           </CardFooter>
         </Card>
       )

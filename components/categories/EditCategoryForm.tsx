@@ -28,7 +28,6 @@ export default function EditCategoryForm({category, children}: {category: Catego
                 <div className={"pt-3 flex flex-col gap-2"}>
                     <Label htmlFor="name">Name</Label>
                     <Input value={name} onChange={(e) => setName(e.target.value)} id="name"/>
-
                     <DialogClose asChild>
                         <Button onClick={() => {
 
@@ -42,15 +41,11 @@ export default function EditCategoryForm({category, children}: {category: Catego
 
                         }}>Edit</Button>
                     </DialogClose>
-
                     <DialogClose asChild>
-
-                        <Button variant={"destructive"} onClick={() => {
-
+                        <Button variant={"destructive-outline"} onClick={() => {
                             deleteCategory(category.id).then((r: ClientError<any>) => toast({
                                 title: r.error ? JSON.stringify(r.error) : "Successfully deleted category",
                             }))
-
                         }}>Delete</Button>
                     </DialogClose>
                 </div>

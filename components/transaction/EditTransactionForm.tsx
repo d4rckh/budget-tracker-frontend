@@ -64,7 +64,6 @@ export default function EditTransactionForm({transaction, categories ,children}:
 
                     <DialogClose asChild>
                         <Button onClick={() => {
-
                             editTransaction({
                                 type,
                                 categoryId,
@@ -77,18 +76,13 @@ export default function EditTransactionForm({transaction, categories ,children}:
                             }).then((r: ClientError<any>) => toast({
                                 title: r.error ? JSON.stringify(r.error) : "Successfully edited category",
                             }))
-
                         }}>Edit</Button>
                     </DialogClose>
-
                     <DialogClose asChild>
-
-                        <Button variant={"destructive"} onClick={() => {
-
+                        <Button variant={"destructive-outline"} onClick={() => {
                             deleteTransaction(transaction.id).then((r: ClientError<any>) => toast({
                                 title: r.error ? JSON.stringify(r.error) : "Successfully deleted transaction",
                             }))
-
                         }}>Delete</Button>
                     </DialogClose>
                 </div>

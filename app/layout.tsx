@@ -4,6 +4,8 @@ import Link from "next/link";
 import {Toaster} from "@/components/ui/toaster";
 import {Button} from "@/components/ui/button";
 import {getUserDetails} from "@/actions/userActions";
+import {Badge} from "@/components/ui/badge";
+import {getNotifications} from "@/actions/notificationActions";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -35,7 +37,9 @@ export default async function RootLayout({
       }
       {
         user && <Button asChild variant={"outline"}>
-              <Link href={"/notifications"}>Notifications</Link>
+              <Link href={"/notifications"}>Notifications <Badge className={"ml-2"}>{
+                (await getNotifications()).filter(a => !a.markedAsRead).length
+              }</Badge></Link>
           </Button>
       }
       {
