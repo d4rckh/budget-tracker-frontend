@@ -30,7 +30,7 @@ import {CategoryContract} from "@/types/CategoryContract";
 
 
 export default function NewTransactionDialog({
-                                                 accounts, // Already filtered by currency from the parent
+                                                 accounts,
                                                  userId,
                                                  categories,
                                              }: {
