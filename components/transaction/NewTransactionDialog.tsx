@@ -29,93 +29,117 @@ import {getCategories} from "@/actions/categoryActions";
 import {CategoryContract} from "@/types/CategoryContract";
 
 
-export default function NewTransactionDialog({accounts, userId, categories}:{accounts : AccountContract[], userId : number, categories : CategoryContract[]}) {
+export default function NewTransactionDialog({
+                                                 accounts, // Already filtered by currency from the parent
+                                                 userId,
+                                                 categories,
+                                             }: {
+    accounts: AccountContract[];
+    userId: number;
+    categories: CategoryContract[];
+}) {
     const [type, setType] = useState<"INCOME" | "EXPENSE">("INCOME");
     const [transactionValue, setTransactionValue] = useState(0);
     const [description, setDescription] = useState("");
     const [accountId, setAccountId] = useState(0);
     const [categoryId, setCategoryId] = useState(0);
 
+    const { toast } = useToast();
 
-    const {toast} = useToast();
+    return (
+        <Dialog>
+            <DialogTrigger asChild>
+                <Button size={"icon"} className={"rounded-full"} variant={"outline"}>
+                    +
+                </Button>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Creating new transaction</DialogTitle>
+                    <div className={"pt-3 flex flex-col gap-2"}>
+                        <Label>Type</Label>
+                        <Select onValueChange={(e: "INCOME" | "EXPENSE") => setType(e)}>
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Choose type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="INCOME">Income</SelectItem>
+                                <SelectItem value="EXPENSE">Expense</SelectItem>
+                            </SelectContent>
+                        </Select>
 
-    return <Dialog>
-        <DialogTrigger asChild>
-            <Button size={"icon"} className={"rounded-full"} variant={"outline"}>+</Button>
-        </DialogTrigger>
-        <DialogContent>
-            <DialogHeader>
-                <DialogTitle>Creating new transaction</DialogTitle>
-                <div className={"pt-3 flex flex-col gap-2"}>
+                        <Label>Account</Label>
+                        <Select
+                            onValueChange={(e: string) => setAccountId(parseInt(e))}
+                        >
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Choose account" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {accounts.map((account) => (
+                                    <SelectItem key={account.id} value={account.id.toString()}>
+                                        {account.name} ({account.currency})
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
 
-                    <Label>Type</Label>
-                    <Select onValueChange={(e: "INCOME" | "EXPENSE") => setType(e)}>
-                        <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Choose type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="INCOME">Income</SelectItem>
-                            <SelectItem value="EXPENSE">Expense</SelectItem>
-                        </SelectContent>
-                    </Select>
+                        <Label>Category</Label>
+                        <Select
+                            onValueChange={(e: string) => setCategoryId(parseInt(e))}
+                        >
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Choose category" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {categories.map((category) => (
+                                    <SelectItem key={category.id} value={category.id.toString()}>
+                                        {category.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
 
-                    <Label>Account</Label>
-                    <Select onValueChange={(e: string) => setAccountId(parseInt(e))}>
-                        <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Choose account" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {
-                                accounts.map(account =>
-                                    <SelectItem key={account.id} value={account.id.toString()}>{account.name}</SelectItem>
-                                )
-                            }
-                        </SelectContent>
-                    </Select>
+                        <Label>Description</Label>
+                        <Input
+                            onChange={(e) => setDescription(e.target.value)}
+                            id="description"
+                        />
 
-                    <Label>Category</Label>
-                    <Select onValueChange={(e: string) => setCategoryId(parseInt(e))}>
-                        <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Choose category" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {
-                                categories.map(category =>
-                                    <SelectItem key={category.id} value={category.id.toString()}>{category.name}</SelectItem>
-                                )
-                            }
-                        </SelectContent>
-                    </Select>
+                        <Label>Value</Label>
+                        <Input
+                            type={"number"}
+                            onChange={(e) => setTransactionValue(parseInt(e.target.value))}
+                            id="value"
+                        />
 
-                    <Label>Description</Label>
-                    <Input onChange={(e) => setDescription(e.target.value)} id="description"/>
-
-                    <Label>Value</Label>
-                    <Input type={"number"} onChange={(e) => setTransactionValue(parseInt(e.target.value))} id="value"/>
-
-
-                    <DialogClose asChild>
-                        <Button onClick={() => {
-
-                            newTransaction({
-                                id: 1,
-                                type,
-                                userId:userId,
-                                value: transactionValue,
-                                description: description,
-                                categoryId: categoryId,
-                                accountId: accountId,
-                                timestamp: (new Date()).toISOString(),
-                            }).then((r: ClientError<any>) => toast({
-                                title: r.error ? JSON.stringify(r.error) : "Successfully created account",
-                            }))
-
-                        }}>Create</Button>
-                    </DialogClose>
-                </div>
-            </DialogHeader>
-        </DialogContent>
-    </Dialog>;
+                        <DialogClose asChild>
+                            <Button
+                                onClick={() => {
+                                    newTransaction({
+                                        id: 1,
+                                        type,
+                                        userId: userId,
+                                        value: transactionValue,
+                                        description: description,
+                                        categoryId: categoryId,
+                                        accountId: accountId,
+                                        timestamp: new Date().toISOString(),
+                                    }).then((r: ClientError<any>) =>
+                                        toast({
+                                            title: r.error
+                                                ? JSON.stringify(r.error)
+                                                : "Successfully created transaction",
+                                        })
+                                    );
+                                }}
+                            >
+                                Create
+                            </Button>
+                        </DialogClose>
+                    </div>
+                </DialogHeader>
+            </DialogContent>
+        </Dialog>
+    );
 }
-
-
