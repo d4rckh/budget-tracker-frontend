@@ -25,7 +25,7 @@ import {ClientError, ErrorContract} from "@/types/ErrorContract";
 import {newTransaction} from "@/actions/transactionActions";
 
 import {AccountContract} from "@/types/BudgetContract";
-import {getCategories} from "@/actions/categoryActions";
+
 import {CategoryContract} from "@/types/CategoryContract";
 
 
@@ -44,7 +44,7 @@ export default function NewTransactionDialog({
     const [accountId, setAccountId] = useState(0);
     const [categoryId, setCategoryId] = useState(0);
 
-    const { toast } = useToast();
+    const {toast} = useToast();
 
     return (
         <Dialog>
@@ -60,7 +60,7 @@ export default function NewTransactionDialog({
                         <Label>Type</Label>
                         <Select onValueChange={(e: "INCOME" | "EXPENSE") => setType(e)}>
                             <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Choose type" />
+                                <SelectValue placeholder="Choose type"/>
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="INCOME">Income</SelectItem>
@@ -73,7 +73,7 @@ export default function NewTransactionDialog({
                             onValueChange={(e: string) => setAccountId(parseInt(e))}
                         >
                             <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Choose account" />
+                                <SelectValue placeholder="Choose account"/>
                             </SelectTrigger>
                             <SelectContent>
                                 {accounts.map((account) => (
@@ -89,7 +89,7 @@ export default function NewTransactionDialog({
                             onValueChange={(e: string) => setCategoryId(parseInt(e))}
                         >
                             <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Choose category" />
+                                <SelectValue placeholder="Choose category"/>
                             </SelectTrigger>
                             <SelectContent>
                                 {categories.map((category) => (

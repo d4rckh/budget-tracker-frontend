@@ -9,7 +9,7 @@ import EditCategoryForm from "@/components/categories/EditCategoryForm";
 export default function CategoriesTable({categories}: {
     categories: CategoryContract[]
 }) {
-    return(
+    return (
         <Table>
             <TableHeader>
                 <TableRow>
@@ -20,12 +20,12 @@ export default function CategoriesTable({categories}: {
             <TableBody>
                 {
                     categories.map(category =>
-                      <EditCategoryForm category={category} key={category.id}>
-                        <TableRow className={"cursor-pointer"} key={category.id}>
-                          <TableCell className="font-medium">{category.id}</TableCell>
-                          <TableCell>{category.name}</TableCell>
-                        </TableRow>
-                      </EditCategoryForm>
+                        <EditCategoryForm category={category} key={category.id}>
+                            <TableRow className={"cursor-pointer"} key={category.id}>
+                                <TableCell className="font-medium">{category.id}</TableCell>
+                                <TableCell>{category.name}</TableCell>
+                            </TableRow>
+                        </EditCategoryForm>
                     )
                 }
             </TableBody>

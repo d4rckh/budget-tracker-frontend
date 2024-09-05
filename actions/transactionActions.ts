@@ -8,26 +8,26 @@ import {AccountContract} from "@/types/BudgetContract";
 import {CategoryContract} from "@/types/CategoryContract";
 
 export async function getTransactions(): Promise<TransactionContract[]> {
-  return (await fetchApi<TransactionContract[]>("/transactions", "GET", {
-    tags: ['TRANSACTION']
-  })).data || [];
+    return (await fetchApi<TransactionContract[]>("/transactions", "GET", {
+        tags: ['TRANSACTION']
+    })).data || [];
 }
 
 export async function newTransaction(transaction: TransactionContract): Promise<ClientError<AccountContract>> {
     return await fetchApi("/transactions", "POST", {
-      tags: ['TRANSACTION', 'ACCOUNT']
+        tags: ['TRANSACTION', 'ACCOUNT']
     }, transaction);
 }
 
 export async function deleteTransaction(id: number) {
-  return (await fetchApi<CategoryContract>("/transactions/" + id, "DELETE", {
-    tags: ['TRANSACTION', 'ACCOUNT']
-  }));
+    return (await fetchApi<CategoryContract>("/transactions/" + id, "DELETE", {
+        tags: ['TRANSACTION', 'ACCOUNT']
+    }));
 }
 
 export async function editTransaction(transaction: TransactionContract): Promise<ClientError<CategoryContract>> {
     return await fetchApi("/transactions/" + transaction.id, "PUT", {
-        tags: ['TRANSACTION','ACCOUNT']
+        tags: ['TRANSACTION', 'ACCOUNT']
     }, transaction);
 }
 

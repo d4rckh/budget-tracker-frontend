@@ -10,20 +10,20 @@ import RecoverPasswordDialog from "@/components/users/loginAndRegistration/Recov
 export const LoginFormEmailContext = createContext('');
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-  const {toast} = useToast();
+    const {toast} = useToast();
 
-  return <div className={"flex flex-col gap-1.5"}>
-    <LoginFormEmailContext.Provider value={email}>
-      <Input placeholder={"Email"} onChange={(e) => setEmail(e.target.value)}/>
-      <Input placeholder={"Password"} onChange={(e) => setPassword(e.target.value)} type={"password"}/>
-      <Button onClick={() => login(email, password).then(r => toast({
-        title: r.error ? JSON.stringify(r.error) : "Successfully logged in"
-      }))}>Login</Button>
-      <RecoverPasswordDialog />
-    </LoginFormEmailContext.Provider>
-  </div>
+    return <div className={"flex flex-col gap-1.5"}>
+        <LoginFormEmailContext.Provider value={email}>
+            <Input placeholder={"Email"} onChange={(e) => setEmail(e.target.value)}/>
+            <Input placeholder={"Password"} onChange={(e) => setPassword(e.target.value)} type={"password"}/>
+            <Button onClick={() => login(email, password).then(r => toast({
+                title: r.error ? JSON.stringify(r.error) : "Successfully logged in"
+            }))}>Login</Button>
+            <RecoverPasswordDialog/>
+        </LoginFormEmailContext.Provider>
+    </div>
 
 }

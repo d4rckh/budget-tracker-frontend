@@ -11,7 +11,7 @@ export default async function Page() {
     if (!user.verifiedAt) redirect("/account");
 
     const categories_data = await getCategories();
-    const categories = categories_data.sort((a,b) => a.id - b.id);
+    const categories = categories_data.sort((a, b) => a.id - b.id);
 
     return <>
         <Card className={"mb-3"}>
@@ -28,7 +28,7 @@ export default async function Page() {
                 <CardTitle>Categories</CardTitle>
             </CardHeader>
             <CardContent>
-                <CategoriesTable categories={categories} />
+                <CategoriesTable categories={categories}/>
             </CardContent>
         </Card>
     </>

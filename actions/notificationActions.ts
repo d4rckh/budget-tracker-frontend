@@ -9,29 +9,29 @@ import {CategoryContract} from "@/types/CategoryContract";
 import {revalidateTag} from "next/cache";
 
 export type NotificationContract = {
-  id: number,
-  userId: number,
-  email: string,
-  payload: Record<string, any>,
-  createdAt: string,
-  type: string,
-  channels: string[],
-  markedAsRead: boolean
+    id: number,
+    userId: number,
+    email: string,
+    payload: Record<string, any>,
+    createdAt: string,
+    type: string,
+    channels: string[],
+    markedAsRead: boolean
 }
 
 export async function getNotifications(): Promise<NotificationContract[]> {
-  return (await fetchApi<NotificationContract[]>("/notifications", "GET", {
-    tags: ['NOTIFICATION']
-  })).data || [];
+    return (await fetchApi<NotificationContract[]>("/notifications", "GET", {
+        tags: ['NOTIFICATION']
+    })).data || [];
 }
 
 export async function markNotificationAsRead(id: number) {
-  return (await fetchApi("/notifications/read/" + id, "PUT", {
-    tags: ['NOTIFICATION']
-  }));
+    return (await fetchApi("/notifications/read/" + id, "PUT", {
+        tags: ['NOTIFICATION']
+    }));
 }
 
 export async function refreshNotifications() {
-  revalidateTag("NOTIFICATION")
-  return true;
+    revalidateTag("NOTIFICATION")
+    return true;
 }

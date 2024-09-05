@@ -8,7 +8,7 @@ import {newCategory} from "@/actions/categoryActions";
 import {useToast} from "@/components/ui/use-toast";
 import {UserContract} from "@/types/UserContract";
 
-export default function CreateCategoryForm({user}: {user: UserContract}) {
+export default function CreateCategoryForm({user}: { user: UserContract }) {
     const [categoryName, setCategoryName] = useState('');
     const {toast} = useToast();
 

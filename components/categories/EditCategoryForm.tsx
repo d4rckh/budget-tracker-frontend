@@ -13,7 +13,10 @@ import {ClientError} from "@/types/ErrorContract";
 import {CategoryContract} from "@/types/CategoryContract";
 import {deleteCategory, editCategory} from "@/actions/categoryActions";
 
-export default function EditCategoryForm({category, children}: {category: CategoryContract, children: React.ReactNode}) {
+export default function EditCategoryForm({category, children}: {
+    category: CategoryContract,
+    children: React.ReactNode
+}) {
     const [name, setName] = useState(category.name);
 
     const {toast} = useToast();
@@ -32,7 +35,7 @@ export default function EditCategoryForm({category, children}: {category: Catego
                         <Button onClick={() => {
 
                             editCategory({
-                                id:category.id,
+                                id: category.id,
                                 name,
                                 userId: category.userId
                             }).then((r: ClientError<any>) => toast({

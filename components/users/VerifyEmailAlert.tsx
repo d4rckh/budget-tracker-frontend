@@ -8,22 +8,22 @@ import {Input} from "@/components/ui/input";
 import {useState} from "react";
 
 export default function VerifyEmailAlert() {
-  const {toast} = useToast()
-  const [verificationToken, setVerificationToken] = useState("");
+    const {toast} = useToast()
+    const [verificationToken, setVerificationToken] = useState("");
 
-  function sendEmailButton() {
-    sendVerificationEmail().then((result) => toast({
-      title: result.data ? "Successfully sent verification email" : "Already sent a verification email, please wait 10 minutes",
-    }))
-  }
+    function sendEmailButton() {
+        sendVerificationEmail().then((result) => toast({
+            title: result.data ? "Successfully sent verification email" : "Already sent a verification email, please wait 10 minutes",
+        }))
+    }
 
-  return <Alert variant={"destructive"}>
-    <AlertTitle className={"text-xl"}>Your account is not verified</AlertTitle>
-    <AlertDescription>
-      You won&apos;t use be able to use your account until you verify by email. <Button size={"sm"}
-                                                                                        variant={"outline"}
-                                                                                        onClick={sendEmailButton}>Press
-      here to send email</Button>
-    </AlertDescription>
-  </Alert>
+    return <Alert variant={"destructive"}>
+        <AlertTitle className={"text-xl"}>Your account is not verified</AlertTitle>
+        <AlertDescription>
+            You won&apos;t use be able to use your account until you verify by email. <Button size={"sm"}
+                                                                                              variant={"outline"}
+                                                                                              onClick={sendEmailButton}>Press
+            here to send email</Button>
+        </AlertDescription>
+    </Alert>
 }

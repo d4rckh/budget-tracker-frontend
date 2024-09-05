@@ -13,7 +13,11 @@ import {TransactionContract} from "@/types/TransactionContract";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {deleteTransaction, editTransaction} from "@/actions/transactionActions";
 
-export default function EditTransactionForm({transaction, categories ,children}: {transaction: TransactionContract,categories : CategoryContract[], children: React.ReactNode}) {
+export default function EditTransactionForm({transaction, categories, children}: {
+    transaction: TransactionContract,
+    categories: CategoryContract[],
+    children: React.ReactNode
+}) {
     const [type, setType] = useState<"INCOME" | "EXPENSE">(transaction.type);
     const [transactionValue, setTransactionValue] = useState(transaction.value);
     const [description, setDescription] = useState(transaction.description);
@@ -48,8 +52,8 @@ export default function EditTransactionForm({transaction, categories ,children}:
                         <SelectContent>
                             {
                                 categories.map(category =>
-                                  <SelectItem key={category.id}
-                                              value={category.id.toString()}>{category.name}</SelectItem>
+                                    <SelectItem key={category.id}
+                                                value={category.id.toString()}>{category.name}</SelectItem>
                                 )
                             }
                         </SelectContent>
@@ -89,5 +93,5 @@ export default function EditTransactionForm({transaction, categories ,children}:
             </DialogHeader>
         </DialogContent>
     </Dialog>
-;
+        ;
 }

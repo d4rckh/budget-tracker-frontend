@@ -1,16 +1,16 @@
 export type UserContract = {
-  id: number;
+    id: number;
 
-  email: string;
-  firstName: string;
-  lastName: string;
+    email: string;
+    firstName: string;
+    lastName: string;
 
-  createdAt: string;
-  verifiedAt: string;
-  lastSentVerificationNotification: string;
-  lastChangedPassword: string;
-  lastSentPasswordChangeToken: string;
+    createdAt: string;
+    verifiedAt: string;
+    lastSentVerificationNotification: string;
+    lastChangedPassword: string;
+    lastSentPasswordChangeToken: string;
 
-  verified: boolean;
-  isAdmin: boolean;
+    verified: boolean;
+    isAdmin: boolean;
 }

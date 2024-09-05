@@ -7,23 +7,23 @@ import {register} from "@/actions/loginActions";
 import {ClientError} from "@/types/ErrorContract";
 
 export default function RegisterForm(props: { onRegister: Function }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
 
-  function registerButton() {
-    register(email, password, firstName, lastName).then((r) => {
-      if (r) props.onRegister()
-    });
-  }
+    function registerButton() {
+        register(email, password, firstName, lastName).then((r) => {
+            if (r) props.onRegister()
+        });
+    }
 
-  return <div className={"flex flex-col gap-1.5"}>
-    <Input placeholder={"Email"} onChange={(e) => setEmail(e.target.value)}/>
-    <Input placeholder={"Password"} onChange={(e) => setPassword(e.target.value)} type={"password"}/>
-    <Input placeholder={"First name"} onChange={(e) => setFirstName(e.target.value)}/>
-    <Input placeholder={"Last name"} onChange={(e) => setLastName(e.target.value)}/>
-    <Button onClick={() => registerButton()}>Register</Button>
-  </div>
+    return <div className={"flex flex-col gap-1.5"}>
+        <Input placeholder={"Email"} onChange={(e) => setEmail(e.target.value)}/>
+        <Input placeholder={"Password"} onChange={(e) => setPassword(e.target.value)} type={"password"}/>
+        <Input placeholder={"First name"} onChange={(e) => setFirstName(e.target.value)}/>
+        <Input placeholder={"Last name"} onChange={(e) => setLastName(e.target.value)}/>
+        <Button onClick={() => registerButton()}>Register</Button>
+    </div>
 
 }
